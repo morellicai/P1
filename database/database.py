@@ -1,8 +1,11 @@
+import os
 import mysql.connector
+from dotenv import load_dotenv
 
-config = {
-    'user': 'root',
-    'password': 'manager',
-    'host': 'localhost',
-    'database': "cadastro_prod"
-}
+load_dotenv()
+
+conn = mysql.connector.connect(
+    host = os.getenv("HOST"),
+    user = os.getenv("USERNAME"),
+    password = os.getenv("PASSWD")
+)
