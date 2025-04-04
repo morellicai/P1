@@ -12,7 +12,7 @@ if conn.is_connected():
     print("Conectado ao servidor MySQL versão", db_info)
 
     cursor = conn.cursor()
-    cursor.execute("create database CRUD();")
+    cursor.execute("create database CRUD;")
     linha = cursor.fetchone()
     print("Conectado ao banco de dados ", linha)
 
