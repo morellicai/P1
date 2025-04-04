@@ -132,3 +132,18 @@ sequenceDiagram
     UC-->>UI: Sucesso
     UI-->>User: Exibe confirmação
 ```
+
+# CADASTRO DE PRODUTO
+* ID
+* NOME
+* PREÇO
+* ESTOQUE
+* DESCRIÇÃO
+
+# CADASTRO DE USUÁRIO
+* NOME
+* EMAIL
+* SENHA
+* CARGO
+
+POSTMAN
