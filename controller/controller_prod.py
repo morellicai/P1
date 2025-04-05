@@ -1,9 +1,8 @@
 from fastapi import HTTPException, status
-from model.model_prod import ProdutoModel
+from model._model_prod import ProdutoModel
 from typing import Optional
 
 def validar_produto(nome: str, preco: float, estoque: int):
-    """Valida os dados do produto"""
     errors = []
     
     if not nome or len(nome) < 3:
@@ -23,10 +22,7 @@ def validar_produto(nome: str, preco: float, estoque: int):
 
 def criar_produto(nome: str, preco: float, estoque: int):
     try:
-        # Valida os dados
         validar_produto(nome, preco, estoque)
-        
-        # Cria o produto
         produto_id = ProdutoModel.criar(nome, preco, estoque)
         return {"id": produto_id, "nome": nome, "preco": preco, "estoque": estoque}
     except HTTPException:
@@ -39,8 +35,7 @@ def criar_produto(nome: str, preco: float, estoque: int):
 
 def listar_produtos():
     try:
-        produtos = ProdutoModel.obter_todos()
-        return produtos
+        return ProdutoModel.obter_todos()
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -49,8 +44,7 @@ def listar_produtos():
 
 def obter_produto(id: int):
     try:
-        produto = ProdutoModel.obter_por_id(id)
-        return produto
+        return ProdutoModel.obter_por_id(id)
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -64,7 +58,6 @@ def obter_produto(id: int):
 
 def atualizar_produto(id: int, nome: Optional[str] = None, preco: Optional[float] = None, estoque: Optional[int] = None):
     try:
-        # Valida os dados que serão atualizados
         if nome is not None and len(nome) < 3:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -83,7 +76,6 @@ def atualizar_produto(id: int, nome: Optional[str] = None, preco: Optional[float
                 detail="O estoque deve ser um número inteiro maior ou igual a zero"
             )
         
-        # Atualiza o produto
         atualizados = ProdutoModel.atualizar(id, nome, preco, estoque)
         if atualizados == 0:
             raise HTTPException(
